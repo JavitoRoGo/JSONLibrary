@@ -13,6 +13,7 @@ public enum NetworkError: LocalizedError {
 	case json(Error)
 	case dataNotValid
 	case nonHTTP
+	case unknown
 	
 	public var errorDescription: String? {
 		switch self {
@@ -26,6 +27,8 @@ public enum NetworkError: LocalizedError {
 				"Data not valid, an error has occurred."
 			case .nonHTTP:
 				"This is not a HTTP connection."
+			case .unknown:
+				"Unknown error."
 		}
 	}
 }
