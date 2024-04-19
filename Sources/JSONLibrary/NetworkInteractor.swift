@@ -8,6 +8,8 @@
 import Foundation
 
 public protocol NetworkInteractor {
+	var session: URLSession { get }
+	
 	func getJSON<T>(request: URLRequest, type: T.Type) async throws -> T where T: Codable
 	func postJSON(request: URLRequest) async throws
 }
