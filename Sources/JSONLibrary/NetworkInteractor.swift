@@ -16,6 +16,7 @@ import Foundation
 ///
 /// La implementación de ambas funciones se proporciona a través de una extensión.
 public protocol NetworkInteractor {
+	/// Sesión personalizada de `URLSession` que se inicializará por defecto con el singleton `.shared`, pero permite la inyección de una sesión personalizada para los tests.
 	var session: URLSession { get }
 	
 	/// Función que recupera los datos a través de una llamada de red.
@@ -44,7 +45,7 @@ public protocol NetworkInteractor {
 
 public extension NetworkInteractor {
 	func getJSON<T>(request: URLRequest, type: T.Type) async throws -> T where T: Codable {
-		let (data, response) = try await URLSession.shared.getData(for: request)
+		let (data, response) = try await session.getData(for: request)
 		if response.statusCode == 200 {
 			do {
 				return try JSONDecoder().decode(type, from: data)
@@ -57,7 +58,7 @@ public extension NetworkInteractor {
 	}
 	
 	func postJSON(request: URLRequest) async throws {
-		let (_, response) = try await URLSession.shared.getData(for: request)
+		let (_, response) = try await session.getData(for: request)
 		if response.statusCode != 200 {
 			throw NetworkError.status(response.statusCode)
 		}
