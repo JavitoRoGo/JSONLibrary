@@ -31,6 +31,7 @@ public protocol NetworkInteractor {
 	/// - Returns: La función devuelve los datos de red ya convertidos al tipo indicado en el parámetro `type`.
 	/// - Throws: Error de tipo ``NetworkError``.
 	func getJSON<T>(request: URLRequest, type: T.Type) async throws -> T where T: Codable
+	
 	/// Función que hace una llamada de red y envía los datos especificados.
 	///
 	/// Función utilizada para hacer una llamada de red y enviar los datos en una petición, ya sea para guardarlos, actualizarlos, etc. Los datos, conformados a `Codable`, se incluyen en la petición `URLRequest` como parte del `httpBody`.

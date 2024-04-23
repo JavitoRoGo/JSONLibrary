@@ -16,15 +16,7 @@ public extension URLSession {
 	/// - Returns: Tupla de valores devueltos por la sesión de red, de tipo (`Data`, `HTTPURLResponse`).
 	/// - Throws: Error de tipo ``NetworkError``.
 	func getData(from url: URL) async throws -> (data: Data, response: HTTPURLResponse) {
-		do {
-			let (data, response) = try await data(from: url)
-			guard let response = response as? HTTPURLResponse else { throw NetworkError.nonHTTP }
-			return (data, response)
-		} catch let error as NetworkError {
-			throw error
-		} catch {
-			throw NetworkError.general(error)
-		}
+		try await getData(for: URLRequest(url: url))
 	}
 	
 	/// Función extendida de `URLSession` en su variante con `URLRequest` con gestión de errores propios de tipo ``NetworkError``.
